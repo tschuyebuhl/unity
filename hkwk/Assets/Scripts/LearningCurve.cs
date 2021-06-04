@@ -4,18 +4,28 @@ using UnityEngine;
 
 public class LearningCurve : MonoBehaviour
 {
-  public int currentAge = 30;
-  public int addedAge = 1;
+  private Transform camTransform;
+  public GameObject directionLight;
+  private Transform lightTransform;
 
     // Start is called before the first frame update
     void Start()
     {
-    ComputeAge();    
+    Weapon huntingBow = new Weapon("Hunting Bow",5);
+    Character testowy = new Character();
+    Paladin knight = new Paladin("Krol Arturek", huntingBow);
+
+    knight.PrintStatsInfo();
+    testowy.PrintStatsInfo();
+
+    camTransform = this.GetComponent<Transform>();
+    Debug.Log(camTransform.localPosition);
+
+    //directionLight = GameObject.Find("Directional Light");
+
+    lightTransform = directionLight.GetComponent<Transform>();
+    Debug.Log(lightTransform.localPosition);
     }
-    void ComputeAge()
-	{
-    Debug.Log(currentAge + addedAge);
-	}
     // Update is called once per frame
     void Update()
     {
