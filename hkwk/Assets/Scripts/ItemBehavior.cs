@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ItemBehavior : MonoBehaviour
 {
-  void OnCollisionEnter(Collision collision)
+  void OnTriggerEnter(Collider other)
 	{
-		if (collision.gameObject.name == "Player")
+
+		if (other.tag == "CanPickup")
 		{
 			Destroy(this.transform.parent.gameObject);
-
+			other.GetComponent<BehaviorRb>().Pickup();
+			//Debug.Log(collision.gameObject);
 			Debug.Log("Item collected!");
 		}
 	}

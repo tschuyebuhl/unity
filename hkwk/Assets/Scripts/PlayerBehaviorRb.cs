@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBehaviorRb : MonoBehaviour
+public class PlayerBehaviorRb : BehaviorRb
 {
-  public float moveSpeed = 10f;
-  public float rotateSpeed = 75f;
 
   private float vInput;
   private float hInput;
 
+  public float distanceToGround = 0.1f;
+
+  public LayerMask groundLayer;
+
   private Rigidbody _rb;
+
+  private BoxCollider _col;
 
     void Start()
     {
-    _rb = GetComponent<Rigidbody>();        
+    _rb = GetComponent<Rigidbody>();
+    _col = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -34,6 +39,11 @@ public class PlayerBehaviorRb : MonoBehaviour
 	{
     //2
     Vector3 rotation = Vector3.up * hInput;
+
+    if(IsGrounded() && Input.GetKeyDown(KeyCode.Space))
+		{
+      _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+		}
     //3
     Quaternion angleRot = Quaternion.Euler(rotation * Time.fixedDeltaTime);
     //4
@@ -42,6 +52,26 @@ public class PlayerBehaviorRb : MonoBehaviour
     //5
     _rb.MoveRotation(_rb.rotation * angleRot);
 
+	}
+  public override void Pickup()
+  {
+    this.moveSpeed *= 2.0f;
+  }
+  public override void JumpPickup()
+  {
+    jumpVelocity *= 2.0f;
+  }
+
+  private bool IsGrounded()
+	{
+    Vector3 cubeBottom = new Vector3(_col.bounds.center.x, _col.bounds.min.y, _col.bounds.center.z);
+
+    bool grounded = Physics.CheckCapsule(_col.bounds.center,
+        cubeBottom, distanceToGround, groundLayer,
+      QueryTriggerInteraction.Ignore);
+
+
+    return grounded;
 	}
 }
 /*
