@@ -1,4 +1,4 @@
-Third Person Racing Game
+Third Person Racing Game with jumping
 
 Contributors:
 
