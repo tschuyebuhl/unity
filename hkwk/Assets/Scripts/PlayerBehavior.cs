@@ -23,8 +23,6 @@ public class PlayerBehavior : MonoBehaviour
     //6
     this.transform.Rotate(Vector3.up * hInput * Time.deltaTime);
     }
-
- 
 }
 /*1. dwie publiczne zmienne jako mnożniki: movespeed, czyli jak szybko gracz sie porusza przod/tyl
  *2. rotatespeed czyli jak szybko gracz sie obraca lewo/prawo
